@@ -3,23 +3,20 @@ import main_img from './components/gym_buddy_main_img.png'; // Import the image
 import logo from './components/gym_buddy_logo.png'; // Import the image
 import './App.css';
 import NavBar from './components/NavBar';
+import Testimonials from './components/Testimonials';
+import Footer from './components/Footer';
+import AboutUs from './components/AboutUs';
 
 function App() {
   return (
     <div className="App">
-     
-      <img src={logo} alt="Logo" className="logo" />
-    
-     
-        <p className="bigtext"  >This is some text to the left of the image.</p>
-       
-      
-          <img src={main_img} alt="My Image" className="centered-image" />
-        
-        
       <header className="App-header">
-        <NavBar />
+        {/*<NavBar />*/}
       </header>
+      <body>
+        <Testimonials />
+        <AboutUs />
+      </body>
      </div>
   
   );
