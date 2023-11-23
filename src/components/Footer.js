@@ -1,28 +1,80 @@
 import React from 'react';
-import "./Footer.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { forwardRef, useImperativeHandle } from 'react';
+import './Footer.css';
+import instagram from './instagram.png';
+import linkedin from './linkedin.png';
+import facebook from './facebook.png';
+import footer_download from './footer_download_button.png';
 
-function Footer() {
-    return (
-        <div className="Footer">
-            <p className="tagline">The Grind Doesn't Stop</p>
-            <div className="header-container">
-                <h1 className='footh1'>Become a GymBuddy today!</h1>
-                <div className="button-container">
-                    <button className="download-button">
-                        Download <span role="img" aria-label="fire">🔥</span>
-                    </button>
-                </div>
-            </div>
-            <p className="email">gymbuddy@support.com</p>
-            <div className="social-media">
-                <FontAwesomeIcon className="facebook" icon="fa-brands fa-facebook" style={{color: "#ffffff",}} />
-                <FontAwesomeIcon className="instagram" icon="fa-brands fa-instagram" style={{color: "#ffffff",}} />
-                <FontAwesomeIcon className="linkedin" icon="fa-brands fa-linkedin" style={{color: "#ffffff",}} />
-            </div>
-            <div style={{ paddingBottom: '100px' }}></div>
-        </div>
+
+
+
+const Footer = forwardRef((props, ref) => { 
+  const isMobile = window.innerWidth <= 768;
+  //use this function for each page
+  useImperativeHandle(ref, () => ({
+    // Define functions or values to expose
+    scrollToTop: () => {
+      // Implement the logic to scroll to the top of the LandingPage
+      // You can use the same logic you have in your scrollHandler
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+  }));
+  const openDownloadLink = () => {
+    // Open the link in a new tab
+    const downloadWindow = window.open(
+      'https://apps.apple.com/us/app/gymbuddy-connect-workout/id6446038725',
+      '_blank'
     );
-}
+
+    if (downloadWindow) {
+      downloadWindow.focus();
+    }
+  };
+  const openInstagram = () => {
+    // Open the link in a new tab
+    const downloadWindow = window.open(
+      'https://www.instagram.com/gymbuddy.ucd/?hl=en',
+      '_blank'
+    );
+
+    if (downloadWindow) {
+      downloadWindow.focus();
+    }
+  };
+  const openLinkedIn = () => {
+    // Open the link in a new tab
+    const downloadWindow = window.open(
+      'https://www.linkedin.com/company/gymbuddyapp/'
+    );
+
+    if (downloadWindow) {
+      downloadWindow.focus();
+    }
+  };
+  return (
+    
+    <footer className='footer-style' id = 'footer'>
+      <style>
+  @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500&display=swap');
+     </style>
+     <div className='footer-text'>
+     <h3 className='sec-title'>The Grind Doesn't Stop</h3>
+      <h1 className='main-title'>Become a GymBuddy Today!</h1>
+      <h4 className='email-title'>hellogymbuddy@gmail.com</h4>
+      </div>
+      <div className='icons-style'>
+      <img src={instagram} onClick={openInstagram}/>
+      <img src={linkedin} onClick={openLinkedIn}/>
+      </div>
+      <img className = 'footer-download'src={footer_download} onClick={openDownloadLink}/> 
+    
+
+ 
+
+      <p>&copy; 2023 Your Company</p>
+    </footer>
+  );
+});
 
 export default Footer;

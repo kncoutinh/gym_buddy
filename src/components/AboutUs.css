@@ -1,6 +1,8 @@
 .aboutApp {
   text-align: left;
   margin: 20%;
+  margin-bottom: 100px ;
+  margin-top: -200px ;
 }
 
 @media (max-width: 768px) {

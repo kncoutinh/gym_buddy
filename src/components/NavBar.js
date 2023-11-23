@@ -1,32 +1,121 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './NavBar.css';
-import logo from './gym_buddy_logo.png'
+import LandingPage from './LandingPage.js';
+import {Link} from 'react-scroll';
+import logo from './logo2.png';
+import HowItWorks from './HowItWorks.js';
+import AboutUs from './AboutUs.js';
+import Footer from './Footer.js';
+
 function NavBar() {
+  const landingPageRef = useRef(React.createRef());
+  const howitworksref = useRef();
+  const aboutusref = useRef();
+  const footerref = useRef();
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [showMenu, setShowMenu] = useState(false);
+
+  const updateWindowSize = () => {
+    setIsMobile(window.innerWidth <= 768);
+  };
+
+  useEffect(() => {
+    // Add event listener to update isMobile when the window size changes
+    window.addEventListener('resize', updateWindowSize);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('resize', updateWindowSize);
+    };
+  }, []);
+
+  const scrollHandler = (elmRef) => {
+    if (elmRef.current) {
+      window.scrollTo({ top: elmRef.current.offsetTop, behavior: 'smooth' });
+    }
+  };
+
+  const openDownloadLink = () => {
+    // Open the link in a new tab
+    const downloadWindow = window.open(
+      'https://apps.apple.com/us/app/gymbuddy-connect-workout/id6446038725',
+      '_blank'
+    );
+
+    if (downloadWindow) {
+      downloadWindow.focus();
+    }
+  };
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
   return (
-    <div style={{ width: '100%', height: '100%', paddingLeft: 36, paddingRight: 36, paddingTop: 32, paddingBottom: 32, background: '#4CC5E8', justifyContent: 'space-between', alignItems: 'flex-start', display: 'inline-flex' }}>
-      <div style={{ flex: '1 1 0', height: 64, position: 'relative' }}>
-        <img style={{ width: 202, height: 40.75, left: 0, top: 8, position: 'absolute' }} src={logo} alt="Logo" />
+    <div className="navbar-container">
+      <div className="logo-container">
+        <img
+          className="logo"
+          src={logo}
+          alt="icon"
+          onClick={() => scrollHandler(landingPageRef)}
+        />
       </div>
-      <div style={{ width: 177, height: 64, left: 1191, top: 0, position: 'absolute', justifyContent: 'flex-end', alignItems: 'flex-start', display: 'inline-flex' }}>
-        <div style={{ justifyContent: 'flex-start', alignItems: 'center', gap: 48, display: 'flex' }}>
-          <div style={{ padding: 10, justifyContent: 'center', alignItems: 'center', gap: 10, display: 'flex' }}>
-            <div style={{ color: 'black', fontSize: 20, fontFamily: 'Inter', fontWeight: '500', wordWrap: 'break-word' }}>Features</div>
-          </div>
-          <div style={{ padding: 10, justifyContent: 'center', alignItems: 'center', gap: 10, display: 'flex' }}>
-            <div style={{ color: 'black', fontSize: 20, fontFamily: 'Inter', fontWeight: '500', wordWrap: 'break-word' }}>About Us </div>
-          </div>
-          <div style={{ padding: 10, justifyContent: 'center', alignItems: 'center', gap: 10, display: 'flex' }}>
-            <div style={{ color: 'black', fontSize: 20, fontFamily: 'Inter', fontWeight: '500', wordWrap: 'break-word' }}>Contact</div>
-          </div>
-          <div style={{ paddingLeft: 40, paddingRight: 40, paddingTop: 20, paddingBottom: 20, background: 'white', borderRadius: 20, border: '1px white solid', justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
-            <div style={{ color: 'black', fontSize: 20, fontFamily: 'Inter', fontWeight: '500', wordWrap: 'break-word' }}>Download ✨</div>
-          </div>
-        </div>
+
+      <div className={`button-container ${showMenu ? 'show-menu' : ''}`}>
+        {isMobile ? (
+          <>
+            <div className="menu-icon" onClick={toggleMenu}>
+              ☰
+            </div>
+            {showMenu && (
+  <div className="menu-items">
+    <div className="nav-button">
+    <Link to="howitworks" spy={true} smooth={true} offset={50} duration={500} onClick={toggleMenu}>
+      Features
+    </Link>
+    </div>
+    <div className="nav-button">
+    <Link to="aboutus" spy={true} smooth={true} offset={50} duration={500} onClick={toggleMenu}>
+      About Us
+      </Link>
+    </div>
+    <div className="nav-button">
+    <Link to="footer" spy={true} smooth={true} offset={50} duration={500} onClick={toggleMenu}>
+      Contact
+      </Link>
+    </div>
+    <div className="down-button" onClick={openDownloadLink}>
+      Download ✨
+    </div>
+  </div>
+)}</>)
+         : (
+          <>
+            <div className="nav-button">
+    <Link to="howitworks" spy={true} smooth={true} offset={50} duration={500} onClick={toggleMenu}>
+      Features
+    </Link>
+    </div>
+    <div className="nav-button">
+    <Link to="aboutus" spy={true} smooth={true} offset={50} duration={500} onClick={toggleMenu}>
+      About Us
+      </Link>
+    </div>
+    <div className="nav-button">
+    <Link to="footer" spy={true} smooth={true} offset={50} duration={500} onClick={toggleMenu}>
+      Contact
+      </Link>
+    </div>
+    <div className="down-button" onClick={openDownloadLink}>
+      Download ✨
+    </div>
+          </>
+        )}
       </div>
     </div>
   );
 }
 
 export default NavBar;
-
-
